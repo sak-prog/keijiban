@@ -1,0 +1,6 @@
+<h1>掲示板</h1>
+ <%= link_to new_board_path do %>スレッド新規作成<% end %>
+ <hr>
+ <% @boards.each do |board| %>
+  <%= link_to board.title, "/boards/#{board.id}" %></br>
+ <% end %>

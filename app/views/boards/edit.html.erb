@@ -1,0 +1,7 @@
+<%= link_to @board.title, "/boards/#{@board.id}" %>
+ <hr>
+ <h1>スレッドの編集</h1>
+ <%= form_tag "/boards/#{@board.id}", method: :put do %>
+   タイトル: <%= text_field_tag :title, @board.title %> <br>
+  <%= submit_tag %>
+ <% end %>
