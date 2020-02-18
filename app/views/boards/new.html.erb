@@ -1,7 +1,23 @@
 <%= link_to "スレッド一覧に戻る", "/boards" %>
- <hr>
- <h1>スレッド新規作成</h1>
- <%= form_tag "/boards", method: :post do %>
-  タイトル: <%= text_field_tag :title %> <br>
-  <%= submit_tag %>
- <% end %>
+<hr>
+<div class="d-flex flex-column align-items-center mt-3">
+  <div class="col-xl-7 col-lg-8 col-md-10 col-sm-11">
+    <div class="card">
+      <div class="card-header text-center">
+        新規スレッド
+      </div>
+      <div class="card-body">
+        <%= form_for @board do |f| %>
+          <div class="field form-group mt-2">
+            <div class="col">
+              <%= f.text_area :title, class: "form-control", placeholder: "タイトル" %>
+            </div>
+          </div>
+          <div class="text-center">
+            <%= f.submit "新規作成", class: "btn btn-success" %>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
