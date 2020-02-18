@@ -13,6 +13,10 @@
               <%= f.text_area :title, class: "form-control", placeholder: "タイトル" %>
             </div>
           </div>
+          <div class="field form-group form-group-lg">
+            <%= f.label :tag_list, class: "sr-only control-label" %>
+            <%= text_field_tag 'board[tag_list]', @board.tag_list.join(","), class: "form-control",placeholder: "コンマ（,）毎に区切ることで複数カテゴリにすることが出来ます。" %>
+          </div>
           <div class="text-center">
             <%= f.submit "新規作成", class: "btn btn-success" %>
           </div>

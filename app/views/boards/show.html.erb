@@ -1,15 +1,21 @@
 <%= link_to "スレッド一覧に戻る", boards_path %>
 <hr>
 <h1><%= @board.title %></h1>
+<% if @board.tag_list.present? %>
+  カテゴリ：
+  <% @board.tag_list.each do |tag| %>
+    <span class="badge badge-pill badge-light"><%= link_to tag, boards_path(tag_name: tag) %></span>
+  <% end %>
+<% end %>
 <% if user_signed_in? %>
   <% if current_user.id == @board.user.id %>
     <%= link_to "タイトルを編集する", edit_board_path(@board.id) %>
     <%= link_to board_path(@board),  method: :delete, data: { confirm: '本当に削除しますか？' } do %>
       <i class="btn btn-sm btn-outline-secondary"><span>削除</span></i>
     <% end %>
+    <hr>
   <% end %>
 <% end %>
-<hr>
 <div>
   <% @comments.each do |comment| %>
     <%= comment.user.name %>
@@ -18,9 +24,9 @@
     <% if comment.user == current_user %>
       <%= link_to "削除", comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "delete-comment" %><br>
     <% end %>
+    <hr>
   <% end %>
 </div>
-<hr>
 <div class="form-grop col-md-10 col-md-1 mx-auto">
   <%= form_for [@board, @comment] do |f| %>
     <div class="container">

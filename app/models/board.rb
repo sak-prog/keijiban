@@ -1,4 +1,5 @@
 class Board < ApplicationRecord
+  acts_as_taggable
   belongs_to :user
   has_many :comments, dependent: :destroy
   validates :user_id, presence: true

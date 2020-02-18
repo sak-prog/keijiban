@@ -4,6 +4,9 @@ class BoardsController < ApplicationController
 
   def index
     @boards = Board.all
+    if params[:tag_name]
+      @boards = @boards.tagged_with("#{params[:tag_name]}")
+    end
   end
 
   def show
@@ -48,7 +51,7 @@ class BoardsController < ApplicationController
   private
 
   def board_params
-    params.permit(:title)
+    params.require(:board).permit(:title, :tag_list)
   end
 
   def correct_user
