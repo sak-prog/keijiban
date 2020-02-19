@@ -3,7 +3,12 @@ class BoardsController < ApplicationController
   before_action :correct_user, only: [:edit, :destroy]
 
   def index
-    @boards = Board.all
+    if params[:q] && params[:q].reject { |key, value| value.blank? }.present?
+      @q = Board.ransack(search_params)
+    else
+      @q = Board.ransack
+    end
+    @boards = @q.result(distinct: true)
     if params[:tag_name]
       @boards = @boards.tagged_with("#{params[:tag_name]}")
     end
@@ -57,5 +62,9 @@ class BoardsController < ApplicationController
   def correct_user
     @board = current_user.boards.find_by(id: params[:id])
     redirect_to boards_path if @board.nil?
+  end
+
+  def search_params
+    params.require(:q).permit(:title_or_tags_name_cont)
   end
 end

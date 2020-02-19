@@ -7,13 +7,13 @@
     <span class="badge badge-pill badge-light"><%= link_to tag, boards_path(tag_name: tag) %></span>
   <% end %>
 <% end %>
+<hr>
 <% if user_signed_in? %>
   <% if current_user.id == @board.user.id %>
     <%= link_to "タイトルを編集する", edit_board_path(@board.id) %>
     <%= link_to board_path(@board),  method: :delete, data: { confirm: '本当に削除しますか？' } do %>
       <i class="btn btn-sm btn-outline-secondary"><span>削除</span></i>
     <% end %>
-    <hr>
   <% end %>
 <% end %>
 <div>
@@ -27,18 +27,20 @@
     <hr>
   <% end %>
 </div>
-<div class="form-grop col-md-10 col-md-1 mx-auto">
-  <%= form_for [@board, @comment] do |f| %>
-    <div class="container">
-      <div class="row pb-2">
-        <div class="col-8">
-          <%= f.text_field :content, class: "form-control", placeholder: "コメント ...", autocomplete: :off %>
-          <%= f.hidden_field :user_id, :value => current_user.id %>
-        </div>
-        <div class="col-2">
-          <%= f.submit 'コメントする',class: "btn btn-primary" %>
+<% if user_signed_in? %>
+  <div class="form-grop col-md-10 col-md-1 mx-auto">
+    <%= form_for [@board, @comment] do |f| %>
+      <div class="container">
+        <div class="row pb-2">
+          <div class="col-8">
+            <%= f.text_field :content, class: "form-control", placeholder: "コメント ...", autocomplete: :off %>
+            <%= f.hidden_field :user_id, :value => current_user.id %>
+          </div>
+          <div class="col-2">
+            <%= f.submit 'コメントする',class: "btn btn-primary" %>
+          </div>
         </div>
       </div>
-    </div>
-  <% end %>
-</div>
+    <% end %>
+  </div>
+<% end %>
