@@ -14,16 +14,22 @@
     <%= link_to board_path(@board),  method: :delete, data: { confirm: '本当に削除しますか？' } do %>
       <i class="btn btn-sm btn-outline-secondary"><span>削除</span></i>
     <% end %>
+    <hr>
   <% end %>
 <% end %>
 <div>
-  <% @comments.each do |comment| %>
-    <%= comment.user.name %>
-    <%= comment.created_at.strftime("%Y/%m/%d %H:%M:%S ") %>
-    <%= comment.content %>
-    <% if comment.user == current_user %>
-      <%= link_to "削除", comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "delete-comment" %><br>
-    <% end %>
+  <% @comments.each_with_index do |comment, index| %>
+    <div>
+      <%= index + 1 %>：
+      <%= comment.user.name %>：
+      <%= comment.created_at.strftime("%Y/%m/%d %H:%M:%S ") %>
+      <% if comment.user == current_user %>
+        <%= link_to "削除", comment_path(comment), method: :delete, data: { confirm: '本当に削除しますか？' }, class: "delete-comment" %><br>
+      <% end %>
+    </div>
+    <div class="pl-4">
+      <%= comment.content %>
+    </div>
     <hr>
   <% end %>
 </div>
